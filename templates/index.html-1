@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BLOCKCHAIN</title>
+    <style>
+        .block {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            border: 1px solid black;
+            text-align: center;
+        }
+        .block:first-child {
+            margin-left: 50px;
+        }
+        .line {
+            display: inline-block;
+            width: 50px;
+            height: 1px;
+            border: 1px solid black;
+            margin-top: 50px;
+            margin-left: -0px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>BLOCKCHAIN PARA PARA RED DE SENSORES</h1>
+    {% for block in data %}
+        <div class="block">
+            <a href="{{ url_for('block_detail', block_id=block['index']) }}">
+                Block {{ block['index'] }}
+            </a>
+        </div>
+        {% if not loop.last %}
+            <div class="line"></div>
+        {% endif %}
+    {% endfor %}
+</body>
+</html>

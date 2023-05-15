@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>BLOCKCHAIN</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* PAGINA WEB*/
+        html,body{
+            width:100%;
+            height:100%;
+            background:#111;
+        }
+        html{
+          -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+        body {
+          font-family: 'Roboto', sans-serif;
+          background-color:#000;
+          color: #fff;
+          font-size: 18px;
+          font-weight: 300;
+          position: relative;
+          z-index: 99;
+        }
+        canvas{
+          display:block;
+          vertical-align:bottom;
+        }
+
+        /* CADENA DE BLOQUES */
+        .block {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            border: 3px solid white;
+            background-color: black;
+            text-align: center;
+            position: relative;
+            z-index: 100;
+            top: 20%;
+            left: 2%;
+            box-shadow: 0 0 15px #fff;
+        }
+        .block__fuente{
+              font-size: 13px;
+              margin-top: 15px;
+            }
+        .block:first-child {
+            margin-left: 50px;
+        }
+        .line {
+          display: inline-block;
+          width: 50px;
+          height: 2px;
+          border: 2px solid white;
+          margin-top: 50px;
+          margin-left: -0px;
+          position: relative;
+          z-index: 100;
+          top: 14%;
+          left: 2%;
+          background-color: black;
+          box-shadow: 0 0 10px #fff;
+        }
+        /* ---- stats.js ---- */
+
+        .count-particles{
+          background: #000022;
+          position: absolute;
+          top: 48px;
+          left: 0;
+          width: 80px;
+          color: #13E8E9;
+          font-size: .8em;
+          text-align: left;
+          text-indent: 4px;
+          line-height: 14px;
+          padding-bottom: 2px;
+          font-family: Helvetica, Arial, sans-serif;
+          font-weight: bold;
+        }
+
+        .js-count-particles{
+          font-size: 1.1em;
+        }
+
+        #stats,
+        .count-particles{
+          -webkit-user-select: none;
+          margin-top: 5px;
+          margin-left: 5px;
+        }
+
+        #stats{
+          border-radius: 3px 3px 0 0;
+          overflow: hidden;
+        }
+
+        .count-particles{
+          border-radius: 0 0 3px 3px;
+        }
+
+        /* ---- particles.js container ---- */
+
+        #particles-js{
+          width: 100%;
+          height: 100%;
+          position: fixed;
+          background-color: #020428;
+          background-image: url('');
+          background-size: cover;
+          background-position: 50% 50%;
+          background-repeat: no-repeat;
+        }
+        /*-------Imagen-------------*/
+        .image-container {
+            display: flex;
+            justify-content: center;
+            position: fixed;
+            width: 25%;
+            height: 50%;
+            border-radius: 50%;
+            z-index: 100;
+            top: 30%;
+            left: 35%;
+
+
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: 100%;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div id="particles-js"></div>
+    <h1 style="position: absolute; left: 10%; ">ESQUEMA DE AUTENTICACIÓN PARA WSN - BLOCKCHAIN</h1>
+    <h5 style="position: absolute; left: 88%; top: 80%; ">CARLA VALLEJO</h5>
+    <div class="image-container">
+        <img src="{{ url_for('static', filename='UTN.png') }}" alt="logo UTN">
+    </div>
+
+    {% for block in data %}
+        <div class="block">
+            <p class="block__fuente">{{ block['hash'][4:14]}}</p>
+            <a href="{{ url_for('block_detail', block_id=block['index']) }}">
+                Block {{ block['index'] }}
+            </a>
+            <p class="block__fuente">{{ block['hash_previo'][4:14]}}</p>
+        </div>
+            {% if not loop.last %}
+                <div class="line"></div>
+            {% endif %}
+        {% endfor %}
+
+
+	<script type="text/javascript" src="{{ url_for('static', filename='particles.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='particulas.js') }}"></script>
+    <!-- scripts -->
+<!-- stats.js -->
+<script>
+  var count_particles, stats, update;
+  stats = new Stats;
+  stats.setMode(0);
+  stats.domElement.style.position = 'absolute';
+  stats.domElement.style.left = '0px';
+  stats.domElement.style.top = '0px';
+  document.body.appendChild(stats.domElement);
+  count_particles = document.querySelector('.js-count-particles');
+  update = function() {
+    stats.begin();
+    stats.end();
+    if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {
+      count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
+    }
+    requestAnimationFrame(update);
+  };
+  requestAnimationFrame(update);
+</script>
+
+</body>
+</html>
